@@ -1,0 +1,44 @@
+{
+  "name": "runscript",
+  "version": "1.0.0",
+  "description": "Run script easy!",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "test": "npm run lint && mocha -t 5000 test/*.test.js",
+    "test-cov": "istanbul cover _mocha -- -t 5000 test/*.test.js",
+    "lint": "eslint .",
+    "ci": "npm run lint && npm run test-cov",
+    "autod": "autod -w --prefix '~'"
+  },
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "autod": "*",
+    "eslint": "1",
+    "eslint-config-egg": "1",
+    "istanbul": "*",
+    "mocha": "*"
+  },
+  "homepage": "https://github.com/node-modules/runscript",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/node-modules/runscript.git",
+    "web": "https://github.com/node-modules/runscript"
+  },
+  "bugs": {
+    "url": "https://github.com/node-modules/runscript/issues",
+    "email": "m@fengmk2.com"
+  },
+  "keywords": [
+    "runscript", "run-script", "npm run"
+  ],
+  "engines": {
+    "node": ">=4.2.3"
+  },
+  "author": "fengmk2 <m@fengmk2.com> (http://fengmk2.com)",
+  "license": "MIT"
+}
