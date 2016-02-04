@@ -3,6 +3,7 @@ runscript
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
+[![appveyor build status][appveyor-image]][appveyor-url]
 [![Test coverage][codecov-image]][codecov-url]
 [![David deps][david-image]][david-url]
 [![npm download][download-image]][download-url]
@@ -11,6 +12,8 @@ runscript
 [npm-url]: https://npmjs.org/package/runscript
 [travis-image]: https://img.shields.io/travis/node-modules/runscript.svg?style=flat-square
 [travis-url]: https://travis-ci.org/node-modules/runscript
+[appveyor-image]: https://ci.appveyor.com/api/projects/status/n2jolahay1kk5kn5?svg=true
+[appveyor-url]: https://ci.appveyor.com/project/fengmk2/runscript
 [codecov-image]: https://codecov.io/github/node-modules/runscript/coverage.svg?branch=master
 [codecov-url]: https://codecov.io/github/node-modules/runscript?branch=master
 [david-image]: https://img.shields.io/david/node-modules/runscript.svg?style=flat-square
