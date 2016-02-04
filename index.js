@@ -27,7 +27,7 @@ module.exports = function runScript(script, options) {
     if (process.platform === 'win32') {
       sh = process.env.comspec || 'cmd';
       shFlag = '/d /s /c';
-      // options.windowsVerbatimArguments = true;
+      options.windowsVerbatimArguments = true;
     }
 
     const proc = spawn(sh, [shFlag, script], options);
