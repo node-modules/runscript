@@ -1,6 +1,6 @@
 {
   "name": "runscript",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Run script easy!",
   "main": "index.js",
   "files": [
