@@ -14,6 +14,14 @@
 
 const spawn = require('child_process').spawn;
 
+/**
+ * Run shell script in child process
+ * Support OSX, Linux and Windows
+ * @param {String} script - full script string, like `git clone https://github.com/node-modules/runscript.git`
+ * @param {Object} [options] - spawn options
+ *   @see https://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options
+ * @return {Object} stdio object, will contains stdio.stdout and stdio.stderr buffer.
+ */
 module.exports = function runScript(script, options) {
   return new Promise((resolve, reject) => {
     options = options || {};
@@ -31,13 +39,36 @@ module.exports = function runScript(script, options) {
     }
 
     const proc = spawn(sh, [shFlag, script], options);
+    const stdout = [];
+    const stderr = [];
+    if (proc.stdout) {
+      proc.stdout.on('data', buf => {
+        stdout.push(buf);
+      });
+    }
+    if (proc.stderr) {
+      proc.stderr.on('data', buf => {
+        stderr.push(buf);
+      });
+    }
     proc.on('error', reject);
-
     proc.on('close', code => {
-      if (code > 0) {
-        return reject(new Error('Exit code ' + code));
+      const stdio = {
+        stdout: null,
+        stderr: null,
+      };
+      if (stdout.length > 0) {
+        stdio.stdout = Buffer.concat(stdout);
       }
-      return resolve();
+      if (stderr.length > 0) {
+        stdio.stderr = Buffer.concat(stderr);
+      }
+      if (code > 0) {
+        const err = new Error(`Run "${sh} ${shFlag} ${script}" error, exit code ${code}`);
+        err.stdio = stdio;
+        return reject(err);
+      }
+      return resolve(stdio);
     });
   });
 };
