@@ -9,7 +9,7 @@
   "scripts": {
     "test": "npm run lint && mocha -t 5000 test/*.test.js",
     "test-cov": "istanbul cover _mocha -- -t 5000 test/*.test.js",
-    "lint": "eslint .",
+    "lint": "eslint index.js test",
     "ci": "npm run lint && npm run test-cov",
     "autod": "autod -w --prefix '~'"
   },
