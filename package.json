@@ -14,7 +14,7 @@
     "autod": "autod -w --prefix '~'"
   },
   "dependencies": {
-
+    "is-type-of": "^1.0.0"
   },
   "devDependencies": {
     "autod": "*",
@@ -34,7 +34,9 @@
     "email": "m@fengmk2.com"
   },
   "keywords": [
-    "runscript", "run-script", "npm run"
+    "runscript",
+    "run-script",
+    "npm run"
   ],
   "engines": {
     "node": ">=4.2.3"
