@@ -12,6 +12,8 @@
  * Module dependencies.
  */
 
+const is = require('is-type-of');
+const assert = require('assert');
 const spawn = require('child_process').spawn;
 
 /**
@@ -28,6 +30,8 @@ module.exports = function runScript(script, options) {
     options.env = options.env || Object.create(process.env);
     options.cwd = options.cwd || process.cwd();
     options.stdio = options.stdio || 'inherit';
+    if (options.stdout) assert(is.writableStream(options.stdout), 'options.stdout should be writable stream');
+    if (options.stderr) assert(is.writableStream(options.stderr), 'options.stderr should be writable stream');
 
     let sh = 'sh';
     let shFlag = '-c';
@@ -45,11 +49,17 @@ module.exports = function runScript(script, options) {
       proc.stdout.on('data', buf => {
         stdout.push(buf);
       });
+      if (options.stdout) {
+        proc.stdout.pipe(options.stdout);
+      }
     }
     if (proc.stderr) {
       proc.stderr.on('data', buf => {
         stderr.push(buf);
       });
+      if (options.stderr) {
+        proc.stderr.pipe(options.stderr);
+      }
     }
     proc.on('error', reject);
     proc.on('close', code => {
