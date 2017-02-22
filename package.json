@@ -7,8 +7,8 @@
     "index.js"
   ],
   "scripts": {
-    "test": "npm run lint && mocha -t 5000 test/*.test.js",
-    "test-cov": "istanbul cover _mocha -- -t 5000 test/*.test.js",
+    "test": "npm run lint && egg-bin test",
+    "test-cov": "egg-bin cov",
     "lint": "eslint index.js test",
     "ci": "npm run lint && npm run test-cov",
     "autod": "autod -w --prefix '^'"
@@ -18,11 +18,10 @@
   },
   "devDependencies": {
     "autod": "*",
+    "egg-bin": "^2.2.1",
     "egg-ci": "^1.1.0",
     "eslint": "3",
-    "eslint-config-egg": "3",
-    "istanbul": "*",
-    "mocha": "*"
+    "eslint-config-egg": "3"
   },
   "homepage": "https://github.com/node-modules/runscript",
   "repository": {
