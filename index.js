@@ -1,16 +1,4 @@
-/**
- * Copyright(c) node-modules and other contributors.
- * MIT Licensed
- *
- * Authors:
- *   fengmk2 <m@fengmk2.com> (http://fengmk2.com)
- */
-
 'use strict';
-
-/**
- * Module dependencies.
- */
 
 const is = require('is-type-of');
 const assert = require('assert');
@@ -42,7 +30,7 @@ module.exports = function runScript(script, options) {
       options.windowsVerbatimArguments = true;
     }
 
-    const proc = spawn(sh, [shFlag, script], options);
+    const proc = spawn(sh, [ shFlag, script ], options);
     const stdout = [];
     const stderr = [];
     if (proc.stdout) {
@@ -73,7 +61,7 @@ module.exports = function runScript(script, options) {
       if (stderr.length > 0) {
         stdio.stderr = Buffer.concat(stderr);
       }
-      if (code > 0) {
+      if (code !== 0) {
         const err = new Error(`Run "${sh} ${shFlag} ${script}" error, exit code ${code}`);
         err.stdio = stdio;
         return reject(err);
