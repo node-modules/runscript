@@ -11,15 +11,16 @@
     "test-cov": "istanbul cover _mocha -- -t 5000 test/*.test.js",
     "lint": "eslint index.js test",
     "ci": "npm run lint && npm run test-cov",
-    "autod": "autod -w --prefix '~'"
+    "autod": "autod -w --prefix '^'"
   },
   "dependencies": {
     "is-type-of": "^1.0.0"
   },
   "devDependencies": {
     "autod": "*",
-    "eslint": "1",
-    "eslint-config-egg": "1",
+    "egg-ci": "^1.1.0",
+    "eslint": "3",
+    "eslint-config-egg": "3",
     "istanbul": "*",
     "mocha": "*"
   },
@@ -40,6 +41,9 @@
   ],
   "engines": {
     "node": ">=4.2.3"
+  },
+  "ci": {
+    "version": "4, 6, 7"
   },
   "author": "fengmk2 <m@fengmk2.com> (http://fengmk2.com)",
   "license": "MIT"

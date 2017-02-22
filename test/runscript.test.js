@@ -1,16 +1,4 @@
-/**
- * Copyright(c) node-modules and other contributors.
- * MIT Licensed
- *
- * Authors:
- *   fengmk2 <m@fengmk2.com> (http://fengmk2.com)
- */
-
 'use strict';
-
-/**
- * Module dependencies.
- */
 
 const fs = require('fs');
 const path = require('path');
@@ -28,6 +16,13 @@ describe('test/runscript.test.js', () => {
 
   it('should run `$ echo "hello"`', () => {
     return runScript('echo "hello"');
+  });
+
+  it('should reject on exit code < 0', () => {
+    return runScript('node -e "process.exit(-1)"')
+      .catch(err => {
+        console.log(err);
+      });
   });
 
   it('should pipe and get stdout string', () => {
