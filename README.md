@@ -43,6 +43,20 @@ runScript('node -v', { stdio: 'pipe' })
   });
 ```
 
+## API
+
+```js
+/**
+ * Run shell script in child process
+ * Support OSX, Linux and Windows
+ * @param {String} script - full script string, like `git clone https://github.com/node-modules/runscript.git`
+ * @param {Object} [options] - spawn options, @see https://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options
+ * @param {Function} [options.onStart] - callback with `proc` when start
+ * @return {Promise} stdio object, will contains stdio.stdout and stdio.stderr buffer.
+ */
+ runScript(script, options) {}
+```
+
 ## License
 
 [MIT](LICENSE.txt)

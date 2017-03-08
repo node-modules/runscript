@@ -25,6 +25,19 @@ describe('test/runscript.test.js', () => {
       });
   });
 
+  it('should pass proc to parent with onStart', () => {
+    let pid;
+    return runScript(`node ${path.join(__dirname, 'fixtures/process.js')}`, {
+      stdio: 'pipe',
+      onStart(proc) { pid = String(proc.pid); },
+    }).then(stdio => {
+      console.log('parent pid', process.pid);
+      console.log(stdio.stdout.toString());
+      assert(pid === stdio.stdout.toString().trim(), JSON.stringify(stdio.stdout.toString()));
+      assert.equal(stdio.stderr, null);
+    });
+  });
+
   it('should pipe and get stdout string', () => {
     return runScript('node -v', {
       stdio: 'pipe',
