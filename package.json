@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "autod": "*",
-    "egg-bin": "^2.2.1",
+    "egg-bin": "1",
     "egg-ci": "^1.1.0",
     "eslint": "3",
     "eslint-config-egg": "3"
