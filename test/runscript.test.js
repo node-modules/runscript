@@ -115,4 +115,27 @@ describe('test/runscript.test.js', () => {
       assert.equal(stdio.stderr, null);
     });
   });
+
+  if (process.platform === 'win32') {
+    it('should run relative path .\\node_modules\\.bin\\autod', () => {
+      return runScript('.\\node_modules\\.bin\\autod -V', {
+        stdio: 'pipe',
+      }).then(stdio => {
+        // console.log(stdio.stdout.toString());
+        assert(/^\d+\.\d+\.\d+$/.test(stdio.stdout.toString().trim()));
+        assert.equal(stdio.stderr, null);
+      });
+    });
+
+    it('should run relative path ..\\..\\node_modules\\.bin\\autod', () => {
+      return runScript('..\\..\\node_modules\\.bin\\autod -V', {
+        stdio: 'pipe',
+        cwd: path.join(__dirname, 'fixtures'),
+      }).then(stdio => {
+        // console.log(stdio.stdout.toString());
+        assert(/^\d+\.\d+\.\d+$/.test(stdio.stdout.toString().trim()));
+        assert.equal(stdio.stderr, null);
+      });
+    });
+  }
 });

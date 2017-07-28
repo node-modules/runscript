@@ -1,7 +1,9 @@
 'use strict';
 
+const debug = require('debug')('runscript');
 const is = require('is-type-of');
 const assert = require('assert');
+const path = require('path');
 const spawn = require('child_process').spawn;
 
 /**
@@ -28,8 +30,15 @@ module.exports = function runScript(script, options) {
       sh = process.env.comspec || 'cmd';
       shFlag = '/d /s /c';
       options.windowsVerbatimArguments = true;
+      if (script.indexOf('./') === 0 || script.indexOf('.\\') === 0 ||
+          script.indexOf('../') === 0 || script.indexOf('..\\') === 0) {
+        const splits = script.split(' ');
+        splits[0] = path.join(options.cwd, splits[0]);
+        script = splits.join(' ');
+      }
     }
 
+    debug('%s %s %s, %j', sh, shFlag, script, options);
     const proc = spawn(sh, [ shFlag, script ], options);
     const stdout = [];
     const stderr = [];
