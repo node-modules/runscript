@@ -14,14 +14,14 @@
     "autod": "autod -w --prefix '^'"
   },
   "dependencies": {
-    "is-type-of": "^1.0.0"
+    "is-type-of": "^1.1.0"
   },
   "devDependencies": {
     "autod": "*",
     "egg-bin": "^2.2.1",
     "egg-ci": "^1.1.0",
-    "eslint": "3",
-    "eslint-config-egg": "3"
+    "eslint": "4",
+    "eslint-config-egg": "5"
   },
   "homepage": "https://github.com/node-modules/runscript",
   "repository": {
@@ -42,8 +42,8 @@
     "node": ">=4.2.3"
   },
   "ci": {
-    "version": "4, 6, 7"
+    "version": "4, 6, 8"
   },
-  "author": "fengmk2 <m@fengmk2.com> (http://fengmk2.com)",
+  "author": "fengmk2 <fengmk2@gmail.com> (https://fengmk2.com)",
   "license": "MIT"
 }
