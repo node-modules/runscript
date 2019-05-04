@@ -31,8 +31,7 @@
     "web": "https://github.com/node-modules/runscript"
   },
   "bugs": {
-    "url": "https://github.com/node-modules/runscript/issues",
-    "email": "m@fengmk2.com"
+    "url": "https://github.com/node-modules/runscript/issues"
   },
   "keywords": [
     "runscript",
@@ -43,7 +42,7 @@
     "node": ">=4.2.3"
   },
   "ci": {
-    "version": "4, 6, 8",
+    "version": "4, 6, 8, 10, 12",
     "command": {
       "appveyor": "ci"
     }
