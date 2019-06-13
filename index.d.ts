@@ -2,7 +2,7 @@ import { SpawnOptions } from 'child_process';
 import { Writable } from 'stream';
 
 declare namespace RunScript {
-  export interface Option extends SpawnOptions {
+  export interface Options extends SpawnOptions {
     stdout?: Writable;
     stderr?: Writable;
   }
