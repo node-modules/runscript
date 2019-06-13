@@ -13,7 +13,7 @@ runscript('node -v', { stdio: 'pipe' })
       stderr: process.stderr,
     });
   })
-  .catch((err: runscript.SpecError) => {
+  .catch((err: runscript.StdError) => {
     assert(err.stdio);
     throw new Error('should not throw');
   });

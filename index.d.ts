@@ -12,7 +12,7 @@ declare namespace RunScript {
     stderr: Buffer | null;
   }
 
-  export interface SpecError extends Error {
+  export interface StdError extends Error {
     stdio: Stdio;
   }
 }
