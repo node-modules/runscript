@@ -17,6 +17,6 @@ declare namespace RunScript {
   }
 }
 
-declare function RunScript(cmd: string, opt?: RunScript.Option): Promise<RunScript.Stdio>;
+declare function RunScript(cmd: string, opts?: RunScript.Options): Promise<RunScript.Stdio>;
 
 export = RunScript;
