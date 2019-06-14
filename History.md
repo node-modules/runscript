@@ -1,4 +1,13 @@
 
+1.3.1 / 2019-06-15
+==================
+
+**fixes**
+  * [[`8998c8f`](http://github.com/node-modules/runscript/commit/8998c8f778ce24bb36c653903719fd4ff2189a70)] - fix: add declarations (#7) (吖猩 <<whxaxes@gmail.com>>)
+
+**others**
+  * [[`f618799`](http://github.com/node-modules/runscript/commit/f618799676b43ff2ecda94f7e1677b51cacb8af5)] - test: node 10, 12 (#6) (fengmk2 <<fengmk2@gmail.com>>)
+
 1.3.0 / 2017-07-28
 ==================
 
