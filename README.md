@@ -43,6 +43,22 @@ runScript('node -v', { stdio: 'pipe' })
   });
 ```
 
+### run with timeout
+
+Run user script for a maximum of 10 seconds.
+
+```js
+const runScript = require('runscript');
+
+runScript('node user-script.js', { stdio: 'pipe' }, { timeout: 10000 })
+  .then(stdio => {
+    console.log(stdio);
+  })
+  .catch(err => {
+    console.error(err);
+  });
+```
+
 ## License
 
 [MIT](LICENSE.txt)
