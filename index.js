@@ -110,6 +110,7 @@ module.exports = function runScript(script, options, extraOptions) {
       timeoutTimer = setTimeout(() => {
         debug('proc run timeout: %dms', extraOptions.timeout);
         isEnd = true;
+        debug('kill child process %s', proc.pid);
         proc.kill();
 
         const err = new Error(`Run "${sh} ${shFlag} ${script}" timeout in ${extraOptions.timeout}ms`);
