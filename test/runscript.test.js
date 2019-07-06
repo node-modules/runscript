@@ -22,6 +22,49 @@ describe('test/runscript.test.js', () => {
     return runScript('node -e "process.exit(-1)"')
       .catch(err => {
         console.log(err);
+        assert(err.name === 'RunScriptError');
+      });
+  });
+
+  it('should reject on cmd not exists', () => {
+    return runScript('node-not-exists -e "process.exit(-1)"', {
+      shell: true,
+      stdio: 'pipe',
+    })
+      .catch(err => {
+        console.log(err);
+        assert(err.name === 'RunScriptError');
+      });
+  });
+
+  it('should reject on timeout (stdout)', () => {
+    return runScript(`node ${path.join(__dirname, 'fixtures/timeout.js')}`, {
+      stdio: 'pipe',
+    }, { timeout: 1200 })
+      .catch(err => {
+        console.log(err);
+        assert(err.name === 'RunScriptTimeoutError');
+        assert(err.stdio.stdout.toString() === 'timer start\necho every 500ms\necho every 500ms\n');
+      });
+  });
+
+  it('should reject on timeout (stderr)', () => {
+    return runScript(`node ${path.join(__dirname, 'fixtures/timeout-stderr.js')}`, {
+      stdio: 'pipe',
+    }, { timeout: 1200 })
+      .catch(err => {
+        console.log(err);
+        assert(err.name === 'RunScriptTimeoutError');
+        assert(err.stdio.stderr.toString() === 'timer start\necho every 500ms\necho every 500ms\n');
+      });
+  });
+
+  it('should normal exit before timeout', () => {
+    return runScript(`node ${path.join(__dirname, 'fixtures/timeout-and-exit.js')}`, {
+      stdio: 'pipe',
+    }, { timeout: 1300 })
+      .then(stdio => {
+        assert(stdio.stderr.toString() === 'timer start\necho every 500ms\necho every 500ms\nexit\n');
       });
   });
 
