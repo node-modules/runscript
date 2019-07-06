@@ -1,4 +1,10 @@
 
+1.4.0 / 2019-07-06
+==================
+
+**features**
+  * [[`a0d7ffb`](http://github.com/node-modules/runscript/commit/a0d7ffb815041baa89b46fb5d76b23f759cd56fb)] - feat: run script with timeout (#8) (fengmk2 <<fengmk2@gmail.com>>)
+
 1.3.1 / 2019-06-15
 ==================
 
