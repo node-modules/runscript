@@ -62,7 +62,7 @@ describe('test/runscript.test.js', () => {
   it('should normal exit before timeout', () => {
     return runScript(`node ${path.join(__dirname, 'fixtures/timeout-and-exit.js')}`, {
       stdio: 'pipe',
-    }, { timeout: 1200 })
+    }, { timeout: 1300 })
       .then(stdio => {
         assert(stdio.stderr.toString() === 'timer start\necho every 500ms\necho every 500ms\nexit\n');
       });
