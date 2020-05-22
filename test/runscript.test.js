@@ -23,7 +23,17 @@ describe('test/runscript.test.js', () => {
       .catch(err => {
         console.log(err);
         assert(err.name === 'RunScriptError');
-        assert(err.exitcode === 255);
+        // node 10 on windows -1 equal to 4294967295
+        assert(err.exitcode === 255 || err.exitcode === 4294967295);
+      });
+  });
+
+  it('should reject on exit code = 1', () => {
+    return runScript('node -e "process.exit(1)"')
+      .catch(err => {
+        console.log(err);
+        assert(err.name === 'RunScriptError');
+        assert(err.exitcode === 1);
       });
   });
 
