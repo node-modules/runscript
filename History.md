@@ -1,4 +1,10 @@
 
+1.5.0 / 2020-05-22
+==================
+
+**features**
+  * [[`4d82803`](http://github.com/node-modules/runscript/commit/4d82803172f0a0ef0dd4a5ffecf6e4c44ae63484)] - feat: expose exitcode in error instance (#9) (Otto Mao <<ottomao@gmail.com>>)
+
 1.4.0 / 2019-07-06
 ==================
 
