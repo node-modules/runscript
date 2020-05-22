@@ -46,7 +46,8 @@
   },
   "ci": {
     "version": "4, 6, 8, 10, 12",
-    "type": "github"
+    "type": "github",
+    "npminstall": false
   },
   "author": "fengmk2 <fengmk2@gmail.com> (https://fengmk2.com)",
   "license": "MIT"
