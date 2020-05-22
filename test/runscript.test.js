@@ -23,7 +23,7 @@ describe('test/runscript.test.js', () => {
       .catch(err => {
         console.log(err);
         assert(err.name === 'RunScriptError');
-        assert(err.code === 255);
+        assert(err.exitcode === 255);
       });
   });
 
