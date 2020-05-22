@@ -96,6 +96,7 @@ module.exports = function runScript(script, options, extraOptions) {
         const err = new Error(`Run "${sh} ${shFlag} ${script}" error, exit code ${code}`);
         err.name = 'RunScriptError';
         err.stdio = stdio;
+        err.exitcode = code;
         return reject(err);
       }
       return resolve(stdio);
