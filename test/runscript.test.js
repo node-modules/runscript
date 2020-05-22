@@ -27,6 +27,15 @@ describe('test/runscript.test.js', () => {
       });
   });
 
+  it('should reject on exit code = 1', () => {
+    return runScript('node -e "process.exit(1)"')
+      .catch(err => {
+        console.log(err);
+        assert(err.name === 'RunScriptError');
+        assert(err.exitcode === 1);
+      });
+  });
+
   it('should reject on cmd not exists', () => {
     return runScript('node-not-exists -e "process.exit(-1)"', {
       shell: true,
