@@ -7,6 +7,10 @@ declare namespace RunScript {
     stderr?: Writable;
   }
 
+  export interface ExtraOptions {
+    timeout?: number;
+  }
+
   export interface Stdio {
     stdout: Buffer | null;
     stderr: Buffer | null;
@@ -17,6 +21,6 @@ declare namespace RunScript {
   }
 }
 
-declare function RunScript(cmd: string, opts?: RunScript.Options): Promise<RunScript.Stdio>;
+declare function RunScript(cmd: string, opts?: RunScript.Options, extraOpts?: RunScript.ExtraOptions): Promise<RunScript.Stdio>;
 
 export = RunScript;
