@@ -5,7 +5,7 @@ const path = require('path');
 const assert = require('assert');
 const runScript = require('..');
 
-describe('test/runscript.test.js', () => {
+describe('runscript.test.js', () => {
   it('should run `$ node -v`', () => {
     return runScript('node -v');
   });
@@ -62,20 +62,20 @@ describe('test/runscript.test.js', () => {
   it('should reject on timeout (stderr)', () => {
     return runScript(`node ${path.join(__dirname, 'fixtures/timeout-stderr.js')}`, {
       stdio: 'pipe',
-    }, { timeout: 1200 })
+    }, { timeout: 1500 })
       .catch(err => {
         console.log(err);
         assert(err.name === 'RunScriptTimeoutError');
-        assert(err.stdio.stderr.toString() === 'timer start\necho every 500ms\necho every 500ms\n');
+        assert(err.stdio.stderr.toString() === 'timer start\necho every 600ms\necho every 600ms\n');
       });
   });
 
   it('should normal exit before timeout', () => {
     return runScript(`node ${path.join(__dirname, 'fixtures/timeout-and-exit.js')}`, {
       stdio: 'pipe',
-    }, { timeout: 1300 })
+    }, { timeout: 1800 })
       .then(stdio => {
-        assert(stdio.stderr.toString() === 'timer start\necho every 500ms\necho every 500ms\nexit\n');
+        assert(stdio.stderr.toString() === 'timer start\necho every 600ms\necho every 600ms\nexit\n');
       });
   });
 
@@ -167,26 +167,6 @@ describe('test/runscript.test.js', () => {
       // console.log(stdio.stdout.toString());
       assert(/^\d+\.\d+\.\d+$/.test(stdio.stdout.toString().trim()));
       assert.equal(stdio.stderr, null);
-    });
-  });
-
-  it('should compile ts without error', () => {
-    return runScript('tsc -p ./ts/tsconfig.json', {
-      stdio: 'pipe',
-      cwd: path.join(__dirname, 'fixtures'),
-    }).then(stdio => {
-      assert(!stdio.stderr);
-
-      return runScript('node ./ts/check.js', {
-        stdio: 'pipe',
-        cwd: path.join(__dirname, 'fixtures'),
-      }).then(stdio => {
-        assert(!stdio.stderr);
-        const stdout = stdio.stdout.toString();
-        assert(stdout);
-        assert(stdout.match(/v\d+\.\d+\.\d+/));
-        assert(stdout.match(/Options:/));
-      });
     });
   });
 
