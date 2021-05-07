@@ -62,11 +62,11 @@ describe('runscript.test.js', () => {
   it('should reject on timeout (stderr)', () => {
     return runScript(`node ${path.join(__dirname, 'fixtures/timeout-stderr.js')}`, {
       stdio: 'pipe',
-    }, { timeout: 1200 })
+    }, { timeout: 1500 })
       .catch(err => {
         console.log(err);
         assert(err.name === 'RunScriptTimeoutError');
-        assert(err.stdio.stderr.toString() === 'timer start\necho every 500ms\necho every 500ms\n');
+        assert(err.stdio.stderr.toString() === 'timer start\necho every 600ms\necho every 600ms\n');
       });
   });
 
