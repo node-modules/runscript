@@ -5,7 +5,7 @@ const path = require('path');
 const assert = require('assert');
 const runScript = require('..');
 
-describe('test/runscript.test.js', () => {
+describe('runscript.test.js', () => {
   it('should run `$ node -v`', () => {
     return runScript('node -v');
   });
@@ -167,26 +167,6 @@ describe('test/runscript.test.js', () => {
       // console.log(stdio.stdout.toString());
       assert(/^\d+\.\d+\.\d+$/.test(stdio.stdout.toString().trim()));
       assert.equal(stdio.stderr, null);
-    });
-  });
-
-  it('should compile ts without error', () => {
-    return runScript('tsc -p ./ts/tsconfig.json', {
-      stdio: 'pipe',
-      cwd: path.join(__dirname, 'fixtures'),
-    }).then(stdio => {
-      assert(!stdio.stderr);
-
-      return runScript('node ./ts/check.js', {
-        stdio: 'pipe',
-        cwd: path.join(__dirname, 'fixtures'),
-      }).then(stdio => {
-        assert(!stdio.stderr);
-        const stdout = stdio.stdout.toString();
-        assert(stdout);
-        assert(stdout.match(/v\d+\.\d+\.\d+/));
-        assert(stdout.match(/Options:/));
-      });
     });
   });
 

@@ -14,3 +14,4 @@ node_modules
 npm-debug.log
 coverage/
 test/fixtures/ts/**/*.js
+.DS_Store
