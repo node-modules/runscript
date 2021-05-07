@@ -45,7 +45,7 @@
     "node": ">=4.2.3"
   },
   "ci": {
-    "version": "4, 6, 8, 10, 12",
+    "version": "8, 10, 12, 14, 16",
     "type": "github",
     "npminstall": false
   },
