@@ -1,4 +1,13 @@
 
+1.5.1 / 2021-05-07
+==================
+
+**fixes**
+  * [[`0fd91a4`](http://github.com/node-modules/runscript/commit/0fd91a420da493d1885f7ccd66a6a77394144551)] - fix(interface): Add the missing `extraOpts` paramter in type declaration (#11) (Aaron <<walkthunder@163.com>>)
+
+**others**
+  * [[`6fe00d6`](http://github.com/node-modules/runscript/commit/6fe00d69fd91914f7f0a05f18c38fdc1252946fb)] - deps: upgrade dev deps (#10) (fengmk2 <<fengmk2@gmail.com>>)
+
 1.5.0 / 2020-05-22
 ==================
 
