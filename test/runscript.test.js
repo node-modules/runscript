@@ -170,7 +170,7 @@ describe('runscript.test.js', () => {
     });
   });
 
-  it.only('should exit when child process has not closed stdio streams', () => {
+  it('should exit when child process has not closed stdio streams', () => {
     return runScript(`node ${path.join(__dirname, 'fixtures/child-process-with-unclosed-stdio.js')}`, {
       stdio: 'pipe',
     }).then(stdio => {
