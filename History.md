@@ -1,4 +1,15 @@
 
+1.5.2 / 2022-03-08
+==================
+
+**fixes**
+  * [[`475fc7d`](http://github.com/node-modules/runscript/commit/475fc7dcf9e8558875713f4ec016ff251315bcdd)] - fix: Use to exit event instead of close  (#13) (lusyn <<lusyncat@163.com>>)
+
+**others**
+  * [[`53f88a2`](http://github.com/node-modules/runscript/commit/53f88a28008049b0c17be8c79a4ea24d9288b0b9)] - 📖 DOC: Add contributors (#14) (fengmk2 <<fengmk2@gmail.com>>)
+  * [[`09bb8cd`](http://github.com/node-modules/runscript/commit/09bb8cd38add3ae5b1b1ab46bb090dbcca4ae3b7)] - chore: fix ci badges (fengmk2 <<fengmk2@gmail.com>>)
+  * [[`59b76ef`](http://github.com/node-modules/runscript/commit/59b76efac12095417155602fbd39f530cf3f8600)] - test: add more tsd test cases (#12) (fengmk2 <<fengmk2@gmail.com>>)
+
 1.5.1 / 2021-05-07
 ==================
 
