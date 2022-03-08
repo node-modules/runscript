@@ -76,8 +76,8 @@ module.exports = function runScript(script, options, extraOptions) {
       reject(err);
     });
 
-    proc.on('close', code => {
-      debug('proc emit close: %s', code);
+    proc.on('exit', code => {
+      debug('proc emit exit: %s', code);
       if (isEnd) return;
       isEnd = true;
       clearTimeout(timeoutTimer);
@@ -102,8 +102,8 @@ module.exports = function runScript(script, options, extraOptions) {
       return resolve(stdio);
     });
 
-    proc.on('exit', code => {
-      debug('proc emit exit: %s', code);
+    proc.on('close', code => {
+      debug('proc emit close: %s', code);
     });
 
     if (typeof extraOptions.timeout === 'number' && extraOptions.timeout > 0) {

@@ -170,6 +170,14 @@ describe('runscript.test.js', () => {
     });
   });
 
+  it('should exit when child process has not closed stdio streams', () => {
+    return runScript(`node ${path.join(__dirname, 'fixtures/child-process-with-unclosed-stdio.js')}`, {
+      stdio: 'pipe',
+    }).then(stdio => {
+      assert(/child finish/.test(stdio.stdout.toString().trim()));
+    });
+  });
+
   if (process.platform === 'win32') {
     it('should run relative path .\\node_modules\\.bin\\autod', () => {
       return runScript('.\\node_modules\\.bin\\autod -V', {
