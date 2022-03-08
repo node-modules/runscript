@@ -1,6 +1,10 @@
 runscript
 =======
 
+📢📢📢📢📢 You should use [execa](https://github.com/sindresorhus/execa) instead. 📢📢📢📢
+
+---
+
 [![NPM version][npm-image]][npm-url]
 [![Node.js CI](https://github.com/node-modules/runscript/actions/workflows/nodejs.yml/badge.svg)](https://github.com/node-modules/runscript/actions/workflows/nodejs.yml)
 [![Test coverage][codecov-image]][codecov-url]
