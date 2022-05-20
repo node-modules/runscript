@@ -20,7 +20,7 @@ module.exports = function runScript(script, options, extraOptions) {
   return new Promise((resolve, reject) => {
     extraOptions = extraOptions || {};
     options = options || {};
-    options.env = options.env || Object.create(process.env);
+    options.env = options.env || Object.assign({}, process.env);
     options.cwd = options.cwd || process.cwd();
     options.stdio = options.stdio || 'inherit';
     if (options.stdout) assert(is.writableStream(options.stdout), 'options.stdout should be writable stream');
