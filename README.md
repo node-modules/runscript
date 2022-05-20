@@ -62,10 +62,10 @@ runScript('node user-script.js', { stdio: 'pipe' }, { timeout: 10000 })
 
 ## Contributors
 
-|[<img src="https://avatars.githubusercontent.com/u/156269?v=4" width="100px;"/><br/><sub><b>fengmk2</b></sub>](https://github.com/fengmk2)<br/>|[<img src="https://avatars.githubusercontent.com/u/9939767?v=4" width="100px;"/><br/><sub><b>walkthunder</b></sub>](https://github.com/walkthunder)<br/>|[<img src="https://avatars.githubusercontent.com/u/360661?v=4" width="100px;"/><br/><sub><b>popomore</b></sub>](https://github.com/popomore)<br/>|[<img src="https://avatars.githubusercontent.com/u/1622697?v=4" width="100px;"/><br/><sub><b>ottomao</b></sub>](https://github.com/ottomao)<br/>|[<img src="https://avatars.githubusercontent.com/u/227713?v=4" width="100px;"/><br/><sub><b>atian25</b></sub>](https://github.com/atian25)<br/>|[<img src="https://avatars.githubusercontent.com/u/8433821?v=4" width="100px;"/><br/><sub><b>lusyn</b></sub>](https://github.com/lusyn)<br/>|
+|[<img src="https://avatars.githubusercontent.com/u/156269?v=4" width="100px;"/><br/><sub><b>fengmk2</b></sub>](https://github.com/fengmk2)<br/>|[<img src="https://avatars.githubusercontent.com/u/8433821?v=4" width="100px;"/><br/><sub><b>lusyn</b></sub>](https://github.com/lusyn)<br/>|[<img src="https://avatars.githubusercontent.com/u/9939767?v=4" width="100px;"/><br/><sub><b>walkthunder</b></sub>](https://github.com/walkthunder)<br/>|[<img src="https://avatars.githubusercontent.com/u/360661?v=4" width="100px;"/><br/><sub><b>popomore</b></sub>](https://github.com/popomore)<br/>|[<img src="https://avatars.githubusercontent.com/u/1622697?v=4" width="100px;"/><br/><sub><b>ottomao</b></sub>](https://github.com/ottomao)<br/>|[<img src="https://avatars.githubusercontent.com/u/227713?v=4" width="100px;"/><br/><sub><b>atian25</b></sub>](https://github.com/atian25)<br/>|
 | :---: | :---: | :---: | :---: | :---: | :---: |
 [<img src="https://avatars.githubusercontent.com/u/5856440?v=4" width="100px;"/><br/><sub><b>whxaxes</b></sub>](https://github.com/whxaxes)<br/>
 
-This project follows the git-contributor [spec](https://github.com/xudafeng/git-contributor), auto updated at `Tue Mar 08 2022 10:02:22 GMT+0800`.
+This project follows the git-contributor [spec](https://github.com/xudafeng/git-contributor), auto updated at `Fri May 20 2022 10:00:09 GMT+0800`.
 
 <!-- GITCONTRIBUTOR_END -->

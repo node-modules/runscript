@@ -1,4 +1,13 @@
 
+1.5.3 / 2022-05-20
+==================
+
+**fixes**
+  * [[`fe6d304`](http://github.com/node-modules/runscript/commit/fe6d304ab66229f1e58ecac9069e15d9eedc2e04)] - fix: use object.assign instead of object.create (#16) (lusyn <<lusyncat@163.com>>)
+
+**others**
+  * [[`0008b4b`](http://github.com/node-modules/runscript/commit/0008b4bbcd32f348dc86eb374615562c63dfe24c)] - 👌 IMPROVE: You should use execa instead (#15) (fengmk2 <<fengmk2@gmail.com>>)
+
 1.5.2 / 2022-03-08
 ==================
 
