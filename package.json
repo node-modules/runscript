@@ -14,7 +14,7 @@
     "ci": "npm run lint && npm run test-cov"
   },
   "dependencies": {
-    "debug": "^2.6.8",
+    "debug": "^3.1.0",
     "is-type-of": "^1.1.0"
   },
   "devDependencies": {
