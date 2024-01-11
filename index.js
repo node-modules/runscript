@@ -5,6 +5,23 @@ const is = require('is-type-of');
 const assert = require('assert');
 const path = require('path');
 const spawn = require('child_process').spawn;
+const spawnSync = require('child_process').spawnSync;
+
+function isCmd() {
+  if (process.platform !== 'win32') {
+    return false
+  }
+
+  try {
+    const result = spawnSync(`ls`, {
+      stdio: 'pipe',
+    })
+
+    return result.error !== undefined
+  } catch (err) {
+    return true
+  }
+}
 
 /**
  * Run shell script in child process
@@ -36,7 +53,8 @@ module.exports = function runScript(script, options, extraOptions) {
       if (script.indexOf('./') === 0 || script.indexOf('.\\') === 0 ||
           script.indexOf('../') === 0 || script.indexOf('..\\') === 0) {
         const splits = script.split(' ');
-        splits[0] = path.join(options.cwd, splits[0]);
+        // in bash C:\Windows\system32 -> C:\\Windows\\system32
+        splits[0] = path.join(isCmd() ? options.cwd : path.normalize(options.cwd), splits[0]);
         script = splits.join(' ');
       }
     }
