@@ -1,6 +1,6 @@
 'use strict';
 
-const debug = require('debug')('runscript');
+const debug = require('util').debuglog('runscript');
 const is = require('is-type-of');
 const assert = require('assert');
 const path = require('path');
