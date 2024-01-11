@@ -6,6 +6,22 @@ const assert = require('assert');
 const path = require('path');
 const spawn = require('child_process').spawn;
 
+function isCmd() {
+  if (os.platform() !== 'win32') {
+    return false
+  }
+
+  try {
+    const result = spawnSync(`ls`, {
+      stdio: 'pipe',
+    })
+
+    return result.error !== undefined
+  } catch (err) {
+    return true
+  }
+}
+
 /**
  * Run shell script in child process
  * Support OSX, Linux and Windows
@@ -29,7 +45,7 @@ module.exports = function runScript(script, options, extraOptions) {
     let sh = 'sh';
     let shFlag = '-c';
 
-    if (process.platform === 'win32') {
+    if (process.platform === 'win32' && isCmd()) {
       sh = process.env.comspec || 'cmd';
       shFlag = '/d /s /c';
       options.windowsVerbatimArguments = true;
