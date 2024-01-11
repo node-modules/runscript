@@ -5,9 +5,10 @@ const is = require('is-type-of');
 const assert = require('assert');
 const path = require('path');
 const spawn = require('child_process').spawn;
+const spawnSync = require('child_process').spawnSync;
 
 function isCmd() {
-  if (os.platform() !== 'win32') {
+  if (process.platform !== 'win32') {
     return false
   }
 
