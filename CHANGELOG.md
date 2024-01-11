@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/node-modules/runscript/compare/v1.5.4...v1.6.0) (2024-01-11)
+
+
+### Features
+
+* drop debug deps ([#22](https://github.com/node-modules/runscript/issues/22)) ([c0231b9](https://github.com/node-modules/runscript/commit/c0231b9e4dcc6d79c7e03de452d5eb56d9364b1f))
+
 ## [1.5.4](https://github.com/node-modules/runscript/compare/v1.5.3...v1.5.4) (2024-01-11)
 
 
