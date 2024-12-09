@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.0](https://github.com/node-modules/runscript/compare/v1.6.0...v2.0.0) (2024-12-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop Node.js < 14.0.0 support
+
+part of https://github.com/eggjs/egg/issues/3644
+
+### Features
+
+* support cjs and esm both by tshy ([#23](https://github.com/node-modules/runscript/issues/23)) ([eb81077](https://github.com/node-modules/runscript/commit/eb81077c199389f4889ffeb5dc00b3ca344f5008))
+
 ## [1.6.0](https://github.com/node-modules/runscript/compare/v1.5.4...v1.6.0) (2024-01-11)
 
 
