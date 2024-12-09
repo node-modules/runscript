@@ -1,25 +1,69 @@
-'use strict';
+import { debuglog } from 'node:util';
+import assert from 'node:assert';
+import path from 'node:path';
+import { spawn, spawnSync, type SpawnOptions } from 'node:child_process';
+import { type Writable } from 'node:stream';
+import { isWritable } from 'is-type-of';
 
-const debug = require('util').debuglog('runscript');
-const is = require('is-type-of');
-const assert = require('assert');
-const path = require('path');
-const spawn = require('child_process').spawn;
-const spawnSync = require('child_process').spawnSync;
+const debug = debuglog('runscript');
 
 function isCmd() {
   if (process.platform !== 'win32') {
-    return false
+    return false;
   }
 
   try {
-    const result = spawnSync(`ls`, {
+    const result = spawnSync('ls', {
       stdio: 'pipe',
-    })
+    });
 
-    return result.error !== undefined
+    return result.error !== undefined;
   } catch (err) {
-    return true
+    return true;
+  }
+}
+
+export interface Options extends SpawnOptions {
+  stdout?: Writable;
+  stderr?: Writable;
+}
+
+export interface ExtraOptions {
+  timeout?: number;
+}
+
+export interface Stdio {
+  stdout: Buffer | null;
+  stderr: Buffer | null;
+}
+
+export interface StdError extends Error {
+  stdio: Stdio;
+}
+
+export class RunScriptError extends Error {
+  stdio: Stdio;
+  exitcode: number | null;
+
+  constructor(message: string, stdio: Stdio, exitcode: number | null, options?: ErrorOptions) {
+    super(message, options);
+    this.name = this.constructor.name;
+    this.stdio = stdio;
+    this.exitcode = exitcode;
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
+
+export class RunScriptTimeoutError extends Error {
+  stdio: Stdio;
+  timeout: number;
+
+  constructor(message: string, stdio: Stdio, timeout: number, options?: ErrorOptions) {
+    super(message, options);
+    this.name = this.constructor.name;
+    this.stdio = stdio;
+    this.timeout = timeout;
+    Error.captureStackTrace(this, this.constructor);
   }
 }
 
@@ -33,15 +77,21 @@ function isCmd() {
  *   - {Number} [extraOptions.timeout] - child process running timeout
  * @return {Object} stdio object, will contains stdio.stdout and stdio.stderr buffer.
  */
-module.exports = function runScript(script, options, extraOptions) {
+export function runScript(script: string, options: Options = {}, extraOptions: ExtraOptions = {}): Promise<Stdio> {
   return new Promise((resolve, reject) => {
-    extraOptions = extraOptions || {};
-    options = options || {};
     options.env = options.env || Object.assign({}, process.env);
     options.cwd = options.cwd || process.cwd();
+    if (typeof options.cwd === 'object') {
+      // convert URL object to string
+      options.cwd = String(options.cwd);
+    }
     options.stdio = options.stdio || 'inherit';
-    if (options.stdout) assert(is.writableStream(options.stdout), 'options.stdout should be writable stream');
-    if (options.stderr) assert(is.writableStream(options.stderr), 'options.stderr should be writable stream');
+    if (options.stdout) {
+      assert(isWritable(options.stdout), 'options.stdout should be writable stream');
+    }
+    if (options.stderr) {
+      assert(isWritable(options.stderr), 'options.stderr should be writable stream');
+    }
 
     let sh = 'sh';
     let shFlag = '-c';
@@ -61,13 +111,13 @@ module.exports = function runScript(script, options, extraOptions) {
 
     debug('%s %s %s, %j, %j', sh, shFlag, script, options, extraOptions);
     const proc = spawn(sh, [ shFlag, script ], options);
-    const stdout = [];
-    const stderr = [];
+    const stdout: Buffer[] = [];
+    const stderr: Buffer[] = [];
     let isEnd = false;
-    let timeoutTimer;
+    let timeoutTimer: NodeJS.Timeout;
 
     if (proc.stdout) {
-      proc.stdout.on('data', buf => {
+      proc.stdout.on('data', (buf: Buffer) => {
         debug('stdout %d bytes', buf.length);
         stdout.push(buf);
       });
@@ -76,7 +126,7 @@ module.exports = function runScript(script, options, extraOptions) {
       }
     }
     if (proc.stderr) {
-      proc.stderr.on('data', buf => {
+      proc.stderr.on('data', (buf: Buffer) => {
         debug('stderr %d bytes', buf.length);
         stderr.push(buf);
       });
@@ -87,7 +137,9 @@ module.exports = function runScript(script, options, extraOptions) {
 
     proc.on('error', err => {
       debug('proc emit error: %s', err);
-      if (isEnd) return;
+      if (isEnd) {
+        return;
+      }
       isEnd = true;
       clearTimeout(timeoutTimer);
 
@@ -96,11 +148,13 @@ module.exports = function runScript(script, options, extraOptions) {
 
     proc.on('exit', code => {
       debug('proc emit exit: %s', code);
-      if (isEnd) return;
+      if (isEnd) {
+        return;
+      }
       isEnd = true;
       clearTimeout(timeoutTimer);
 
-      const stdio = {
+      const stdio: Stdio = {
         stdout: null,
         stderr: null,
       };
@@ -111,10 +165,8 @@ module.exports = function runScript(script, options, extraOptions) {
         stdio.stderr = Buffer.concat(stderr);
       }
       if (code !== 0) {
-        const err = new Error(`Run "${sh} ${shFlag} ${script}" error, exit code ${code}`);
-        err.name = 'RunScriptError';
-        err.stdio = stdio;
-        err.exitcode = code;
+        const err = new RunScriptError(
+          `Run "${sh} ${shFlag} ${script}" error, exit code ${code}`, stdio, code);
         return reject(err);
       }
       return resolve(stdio);
@@ -125,16 +177,15 @@ module.exports = function runScript(script, options, extraOptions) {
     });
 
     if (typeof extraOptions.timeout === 'number' && extraOptions.timeout > 0) {
+      const timeout = extraOptions.timeout;
       // start timer
       timeoutTimer = setTimeout(() => {
-        debug('proc run timeout: %dms', extraOptions.timeout);
+        debug('proc run timeout: %dms', timeout);
         isEnd = true;
         debug('kill child process %s', proc.pid);
         proc.kill();
 
-        const err = new Error(`Run "${sh} ${shFlag} ${script}" timeout in ${extraOptions.timeout}ms`);
-        err.name = 'RunScriptTimeoutError';
-        const stdio = {
+        const stdio: Stdio = {
           stdout: null,
           stderr: null,
         };
@@ -144,9 +195,10 @@ module.exports = function runScript(script, options, extraOptions) {
         if (stderr.length > 0) {
           stdio.stderr = Buffer.concat(stderr);
         }
-        err.stdio = stdio;
+        const err = new RunScriptTimeoutError(
+          `Run "${sh} ${shFlag} ${script}" timeout in ${extraOptions.timeout}ms`, stdio, timeout);
         return reject(err);
-      }, extraOptions.timeout);
+      }, timeout);
     }
   });
-};
+}

@@ -2,35 +2,35 @@
   "name": "runscript",
   "version": "1.6.0",
   "description": "Run script easy!",
-  "main": "index.js",
-  "files": [
-    "index.js",
-    "index.d.ts"
-  ],
   "scripts": {
-    "test": "npm run lint && egg-bin test",
-    "test-cov": "egg-bin cov",
-    "lint": "eslint index.js test --fix",
-    "ci": "npm run lint && npm run test-cov",
-    "contributor": "git-contributor"
+    "lint": "eslint --cache src test --ext .ts",
+    "pretest": "npm run prepublishOnly",
+    "test": "npm run lint -- --fix && egg-bin test",
+    "test:node14": "egg-bin test",
+    "preci": "npm run prepublishOnly",
+    "ci": "npm run lint && egg-bin cov && attw --pack",
+    "prepublishOnly": "tshy && tshy-after"
   },
   "dependencies": {
-    "is-type-of": "^1.1.0"
+    "is-type-of": "^2.2.0"
   },
   "devDependencies": {
-    "@types/node": "^12.0.8",
+    "@arethetypeswrong/cli": "^0.15.3",
+    "@eggjs/tsconfig": "1",
+    "@types/mocha": "10",
+    "@types/node": "22",
     "autod": "^3.1.2",
-    "egg-bin": "^1.11.1",
-    "eslint": "^4.19.1",
-    "eslint-config-egg": "^6.0.0",
-    "git-contributor": "^2.1.5",
-    "typescript": "^3.9.3"
+    "egg-bin": "6",
+    "eslint": "8",
+    "eslint-config-egg": "14",
+    "tshy": "2",
+    "tshy-after": "1",
+    "typescript": "5"
   },
   "homepage": "https://github.com/node-modules/runscript",
   "repository": {
     "type": "git",
-    "url": "git://github.com/node-modules/runscript.git",
-    "web": "https://github.com/node-modules/runscript"
+    "url": "git://github.com/node-modules/runscript.git"
   },
   "bugs": {
     "url": "https://github.com/node-modules/runscript/issues"
@@ -41,8 +41,35 @@
     "npm run"
   ],
   "engines": {
-    "node": ">=4.2.3"
+    "node": ">=16.0.0"
   },
   "author": "fengmk2 <fengmk2@gmail.com> (https://github.com/fengmk2)",
-  "license": "MIT"
+  "license": "MIT",
+  "type": "module",
+  "tshy": {
+    "exports": {
+      ".": "./src/index.ts",
+      "./package.json": "./package.json"
+    }
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/index.d.ts",
+        "default": "./dist/commonjs/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "types": "./dist/commonjs/index.d.ts",
+  "main": "./dist/commonjs/index.js",
+  "module": "./dist/esm/index.js"
 }

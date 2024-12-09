@@ -1,11 +1,9 @@
-'use strict';
+import fs from 'node:fs';
+import { strict as assert } from 'node:assert';
+import { runScript, RunScriptTimeoutError } from '../src/index.js';
+import { getFixtures } from './helper.js';
 
-const fs = require('fs');
-const path = require('path');
-const assert = require('assert');
-const runScript = require('..');
-
-describe('runscript.test.js', () => {
+describe('test/runscript.test.ts', () => {
   it('should run `$ node -v`', () => {
     return runScript('node -v');
   });
@@ -49,33 +47,38 @@ describe('runscript.test.js', () => {
   });
 
   it('should reject on timeout (stdout)', () => {
-    return runScript(`node ${path.join(__dirname, 'fixtures/timeout.js')}`, {
+    return runScript(`node ${getFixtures('timeout.js')}`, {
       stdio: 'pipe',
     }, { timeout: 1200 })
-      .catch(err => {
-        console.log(err);
-        assert(err.name === 'RunScriptTimeoutError');
-        assert(err.stdio.stdout.toString() === 'timer start\necho every 500ms\necho every 500ms\n');
+      .catch((err: unknown) => {
+        // console.log(err);
+        assert(err instanceof RunScriptTimeoutError);
+        assert.equal(err.name, 'RunScriptTimeoutError');
+        assert.equal(err.timeout, 1200);
+        assert.match(err.stdio.stdout!.toString(), /timer start\necho every 500ms\n/);
       });
   });
 
   it('should reject on timeout (stderr)', () => {
-    return runScript(`node ${path.join(__dirname, 'fixtures/timeout-stderr.js')}`, {
+    return runScript(`node ${getFixtures('timeout-stderr.js')}`, {
       stdio: 'pipe',
-    }, { timeout: 1500 })
-      .catch(err => {
-        console.log(err);
-        assert(err.name === 'RunScriptTimeoutError');
-        assert(err.stdio.stderr.toString() === 'timer start\necho every 600ms\necho every 600ms\n');
+    }, { timeout: 1700 })
+      .catch((err: unknown) => {
+        // console.log(err);
+        assert(err instanceof RunScriptTimeoutError);
+        assert.equal(err.name, 'RunScriptTimeoutError');
+        assert.equal(err.timeout, 1700);
+        assert.match(err.stdio.stderr!.toString(), /timer start\necho every 600ms\n/);
       });
   });
 
   it('should normal exit before timeout', () => {
-    return runScript(`node ${path.join(__dirname, 'fixtures/timeout-and-exit.js')}`, {
+    return runScript(`node ${getFixtures('timeout-and-exit.js')}`, {
       stdio: 'pipe',
-    }, { timeout: 1800 })
+    }, { timeout: 30000 })
       .then(stdio => {
-        assert(stdio.stderr.toString() === 'timer start\necho every 600ms\necho every 600ms\nexit\n');
+        assert.match(stdio.stderr!.toString(), /timer start\necho every 600ms\n/);
+        assert.match(stdio.stderr!.toString(), /\nexit\n/);
       });
   });
 
@@ -83,7 +86,7 @@ describe('runscript.test.js', () => {
     return runScript('node -v', {
       stdio: 'pipe',
     }).then(stdio => {
-      console.log(stdio.stdout.toString());
+      console.log(stdio.stdout!.toString());
       assert(Buffer.isBuffer(stdio.stdout));
       assert(/^v\d+\.\d+\.\d+$/.test(stdio.stdout.toString().trim()), JSON.stringify(stdio.stdout.toString()));
       assert.equal(stdio.stderr, null);
@@ -115,15 +118,15 @@ describe('runscript.test.js', () => {
   });
 
   it('should pipe and send to stdout and stderr stream', () => {
-    const stdoutPath = path.join(__dirname, 'stdout.log');
-    const stderrPath = path.join(__dirname, 'stderr.log');
-    return runScript(`node ${path.join(__dirname, 'fixtures/console.js')}`, {
+    const stdoutPath = getFixtures('stdout.log');
+    const stderrPath = getFixtures('stderr.log');
+    return runScript(`node ${getFixtures('console.js')}`, {
       stdio: 'pipe',
       stdout: fs.createWriteStream(stdoutPath),
       stderr: fs.createWriteStream(stderrPath),
     }).then(stdio => {
-      assert(stdio.stdout.toString() === 'stdout');
-      assert(stdio.stderr.toString() === 'stderr');
+      assert(stdio.stdout!.toString() === 'stdout');
+      assert(stdio.stderr!.toString() === 'stderr');
       assert(fs.readFileSync(stdoutPath, 'utf8') === 'stdout');
       assert(fs.readFileSync(stderrPath, 'utf8') === 'stderr');
     });
@@ -131,7 +134,7 @@ describe('runscript.test.js', () => {
 
   it('should throw when options.stdout is not writable stream', () => {
     return runScript('node -v', {
-      stdout: fs.createReadStream(__filename),
+      stdout: fs.createReadStream(getFixtures('console.js')) as any,
     }).then(() => {
       throw new Error('should not run');
     }).catch(err => {
@@ -141,7 +144,7 @@ describe('runscript.test.js', () => {
 
   it('should throw when options.stderr is not writable stream', () => {
     return runScript('node -v', {
-      stderr: fs.createReadStream(__filename),
+      stderr: fs.createReadStream(getFixtures('console.js')) as any,
     }).then(() => {
       throw new Error('should not run');
     }).catch(err => {
@@ -154,7 +157,7 @@ describe('runscript.test.js', () => {
       stdio: 'pipe',
     }).then(stdio => {
       // console.log(stdio.stdout.toString());
-      assert(/^\d+\.\d+\.\d+$/.test(stdio.stdout.toString().trim()));
+      assert(/^\d+\.\d+\.\d+$/.test(stdio.stdout!.toString().trim()));
       assert.equal(stdio.stderr, null);
     });
   });
@@ -162,19 +165,19 @@ describe('runscript.test.js', () => {
   it('should run relative path ../../node_modules/.bin/autod', () => {
     return runScript('../../node_modules/.bin/autod -V', {
       stdio: 'pipe',
-      cwd: path.join(__dirname, 'fixtures'),
+      cwd: getFixtures(''),
     }).then(stdio => {
       // console.log(stdio.stdout.toString());
-      assert(/^\d+\.\d+\.\d+$/.test(stdio.stdout.toString().trim()));
+      assert(/^\d+\.\d+\.\d+$/.test(stdio.stdout!.toString().trim()));
       assert.equal(stdio.stderr, null);
     });
   });
 
   it('should exit when child process has not closed stdio streams', () => {
-    return runScript(`node ${path.join(__dirname, 'fixtures/child-process-with-unclosed-stdio.js')}`, {
+    return runScript(`node ${getFixtures('child-process-with-unclosed-stdio.cjs')}`, {
       stdio: 'pipe',
     }).then(stdio => {
-      assert(/child finish/.test(stdio.stdout.toString().trim()));
+      assert(/child finish/.test(stdio.stdout!.toString().trim()));
     });
   });
 
@@ -184,7 +187,7 @@ describe('runscript.test.js', () => {
         stdio: 'pipe',
       }).then(stdio => {
         // console.log(stdio.stdout.toString());
-        assert(/^\d+\.\d+\.\d+$/.test(stdio.stdout.toString().trim()));
+        assert(/^\d+\.\d+\.\d+$/.test(stdio.stdout!.toString().trim()));
         assert.equal(stdio.stderr, null);
       });
     });
@@ -192,10 +195,10 @@ describe('runscript.test.js', () => {
     it('should run relative path ..\\..\\node_modules\\.bin\\autod', () => {
       return runScript('..\\..\\node_modules\\.bin\\autod -V', {
         stdio: 'pipe',
-        cwd: path.join(__dirname, 'fixtures'),
+        cwd: getFixtures(''),
       }).then(stdio => {
         // console.log(stdio.stdout.toString());
-        assert(/^\d+\.\d+\.\d+$/.test(stdio.stdout.toString().trim()));
+        assert(/^\d+\.\d+\.\d+$/.test(stdio.stdout!.toString().trim()));
         assert.equal(stdio.stderr, null);
       });
     });

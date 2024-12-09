@@ -1,5 +1,4 @@
-runscript
-=======
+# runscript
 
 📢📢📢📢📢 You should use [execa](https://github.com/sindresorhus/execa) instead. 📢📢📢📢
 
@@ -22,13 +21,13 @@ Run script easy!
 ## Installation
 
 ```bash
-$ npm install runscript
+npm install runscript
 ```
 
 ## Quick start
 
 ```js
-const runScript = require('runscript');
+const { runScript } = require('runscript');
 
 runScript('node -v', { stdio: 'pipe' })
   .then(stdio => {
@@ -44,7 +43,7 @@ runScript('node -v', { stdio: 'pipe' })
 Run user script for a maximum of 10 seconds.
 
 ```js
-const runScript = require('runscript');
+const { runScript } = require('runscript');
 
 runScript('node user-script.js', { stdio: 'pipe' }, { timeout: 10000 })
   .then(stdio => {
@@ -59,14 +58,8 @@ runScript('node user-script.js', { stdio: 'pipe' }, { timeout: 10000 })
 
 [MIT](LICENSE.txt)
 
-<!-- GITCONTRIBUTOR_START -->
-
 ## Contributors
 
-|[<img src="https://avatars.githubusercontent.com/u/156269?v=4" width="100px;"/><br/><sub><b>fengmk2</b></sub>](https://github.com/fengmk2)<br/>|[<img src="https://avatars.githubusercontent.com/u/8433821?v=4" width="100px;"/><br/><sub><b>lusyn</b></sub>](https://github.com/lusyn)<br/>|[<img src="https://avatars.githubusercontent.com/u/9939767?v=4" width="100px;"/><br/><sub><b>walkthunder</b></sub>](https://github.com/walkthunder)<br/>|[<img src="https://avatars.githubusercontent.com/u/360661?v=4" width="100px;"/><br/><sub><b>popomore</b></sub>](https://github.com/popomore)<br/>|[<img src="https://avatars.githubusercontent.com/u/1622697?v=4" width="100px;"/><br/><sub><b>ottomao</b></sub>](https://github.com/ottomao)<br/>|[<img src="https://avatars.githubusercontent.com/u/227713?v=4" width="100px;"/><br/><sub><b>atian25</b></sub>](https://github.com/atian25)<br/>|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-[<img src="https://avatars.githubusercontent.com/u/47808321?v=4" width="100px;"/><br/><sub><b>akitaSummer</b></sub>](https://github.com/akitaSummer)<br/>|[<img src="https://avatars.githubusercontent.com/in/17324?v=4" width="100px;"/><br/><sub><b>lgtm-com[bot]</b></sub>](https://github.com/apps/lgtm-com)<br/>|[<img src="https://avatars.githubusercontent.com/u/32174276?v=4" width="100px;"/><br/><sub><b>semantic-release-bot</b></sub>](https://github.com/semantic-release-bot)<br/>|[<img src="https://avatars.githubusercontent.com/u/5856440?v=4" width="100px;"/><br/><sub><b>whxaxes</b></sub>](https://github.com/whxaxes)<br/>
+[![Contributors](https://contrib.rocks/image?repo=node-modules/runscript)](https://github.com/node-modules/runscript/graphs/contributors)
 
-This project follows the git-contributor [spec](https://github.com/xudafeng/git-contributor), auto updated at `Thu Jan 11 2024 16:25:27 GMT+0800`.
-
-<!-- GITCONTRIBUTOR_END -->
+Made with [contributors-img](https://contrib.rocks).

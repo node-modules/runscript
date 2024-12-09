@@ -16,3 +16,6 @@ coverage/
 test/fixtures/ts/**/*.js
 .DS_Store
 package-lock.json
+.tshy
+dist
+.eslintcache
