@@ -18,3 +18,4 @@ test/fixtures/ts/**/*.js
 package-lock.json
 .tshy
 dist
+.eslintcache
