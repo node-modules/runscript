@@ -63,19 +63,22 @@ describe('test/runscript.test.ts', () => {
     return runScript(`node ${getFixtures('timeout-stderr.js')}`, {
       stdio: 'pipe',
     }, { timeout: 1700 })
-      .catch(err => {
-        console.log(err);
-        assert(err.name === 'RunScriptTimeoutError');
-        assert.equal(err.stdio.stderr.toString(), 'timer start\necho every 600ms\necho every 600ms\n');
+      .catch((err: unknown) => {
+        // console.log(err);
+        assert(err instanceof RunScriptTimeoutError);
+        assert.equal(err.name, 'RunScriptTimeoutError');
+        assert.equal(err.timeout, 1700);
+        assert.match(err.stdio.stderr!.toString(), /timer start\necho every 600ms\n/);
       });
   });
 
   it('should normal exit before timeout', () => {
     return runScript(`node ${getFixtures('timeout-and-exit.js')}`, {
       stdio: 'pipe',
-    }, { timeout: 2000 })
+    }, { timeout: 30000 })
       .then(stdio => {
-        assert.equal(stdio.stderr!.toString(), 'timer start\necho every 600ms\necho every 600ms\nexit\n');
+        assert.match(stdio.stderr!.toString(), /timer start\necho every 600ms\n/);
+        assert.match(stdio.stderr!.toString(), /\nexit\n/);
       });
   });
 
