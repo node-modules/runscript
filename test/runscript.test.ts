@@ -62,7 +62,7 @@ describe('test/runscript.test.ts', () => {
   it('should reject on timeout (stderr)', () => {
     return runScript(`node ${getFixtures('timeout-stderr.js')}`, {
       stdio: 'pipe',
-    }, { timeout: 1500 })
+    }, { timeout: 1700 })
       .catch(err => {
         console.log(err);
         assert(err.name === 'RunScriptTimeoutError');
