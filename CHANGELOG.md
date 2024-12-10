@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/node-modules/runscript/compare/v2.0.0...v2.0.1) (2024-12-10)
+
+
+### Bug Fixes
+
+* export runscript function ([#24](https://github.com/node-modules/runscript/issues/24)) ([70395b2](https://github.com/node-modules/runscript/commit/70395b27f10d72c3e0406eadc6a6dc42abeeb464))
+
 ## [2.0.0](https://github.com/node-modules/runscript/compare/v1.6.0...v2.0.0) (2024-12-09)
 
 
