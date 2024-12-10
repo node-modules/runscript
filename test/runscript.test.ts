@@ -1,11 +1,15 @@
 import fs from 'node:fs';
 import { strict as assert } from 'node:assert';
-import { runScript, RunScriptTimeoutError } from '../src/index.js';
+import { runscript, runScript, RunScriptTimeoutError } from '../src/index.js';
 import { getFixtures } from './helper.js';
 
 describe('test/runscript.test.ts', () => {
   it('should run `$ node -v`', () => {
     return runScript('node -v');
+  });
+
+  it('should support alias runscript function', () => {
+    return runscript('node -v');
   });
 
   it('should run `$ npm -v`', () => {
