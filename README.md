@@ -26,8 +26,24 @@ npm install runscript
 
 ## Quick start
 
+Commonjs
+
 ```js
 const { runScript } = require('runscript');
+
+runScript('node -v', { stdio: 'pipe' })
+  .then(stdio => {
+    console.log(stdio);
+  })
+  .catch(err => {
+    console.error(err);
+  });
+```
+
+ESM & TypeScript
+
+```js
+import { runScript } from 'runscript';
 
 runScript('node -v', { stdio: 'pipe' })
   .then(stdio => {
@@ -52,6 +68,16 @@ runScript('node user-script.js', { stdio: 'pipe' }, { timeout: 10000 })
   .catch(err => {
     console.error(err);
   });
+```
+
+## Upgrade from 1.x to 2.x
+
+```js
+// 1.x
+// const runscript = require('runscript');
+
+// 2.x
+const { runscript } = require('runscript');
 ```
 
 ## License

@@ -202,3 +202,5 @@ export function runScript(script: string, options: Options = {}, extraOptions: E
     }
   });
 }
+
+export const runscript = runScript;
